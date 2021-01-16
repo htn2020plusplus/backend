@@ -10,6 +10,8 @@
 		"bcrypt": "^5.0.0",
 		"class-validator": "^0.12.2",
 		"dotenv": "^8.2.0",
+		"firebase": "^8.2.3",
+		"firebase-admin": "^9.4.2",
 		"pg": "^8.4.2",
 		"reflect-metadata": "^0.1.13",
 		"ts-node": "^9.0.0",
