@@ -11,6 +11,7 @@ import {
 } from 'typeorm'
 import NamedEntity from './NamedEntity'
 import Policy from './Policy'
+import User from './User'
 
 @ObjectType()
 @Entity()
@@ -34,4 +35,8 @@ export default class Category extends BaseEntity {
 	@ManyToMany(() => Policy, (n) => n.categories)
 	@Field(() => [Policy])
 	policies: Policy[]
+
+	@ManyToMany(() => User, (u) => u.subscribedCategories)
+	@Field(() => [User])
+	subscribedUsers: User[]
 }

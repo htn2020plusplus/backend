@@ -20,4 +20,8 @@ export default class User extends BaseEntity {
 	@Field(() => ID)
 	@PrimaryColumn()
 	id: string
+
+	@ManyToMany(() => Category, (c) => c.subscribedUsers)
+	@Field(() => [Category])
+	subscribedCategories: Category[]
 }
