@@ -28,11 +28,10 @@ export const authChecker: AuthChecker<any> = async (e: any, a: any) => {
 						(x: any) => x.name.value === 'uid'
 					)[0].value.name.value
 				]
-		} else if (fieldName === 'user') {
-			console.log(
+		} else if (['user', 'followEntity', 'follow']) {
+			uidForMatch =
 				fieldNodes[0].arguments[0].value.value ||
-					e.args[fieldNodes[0].arguments[0].value.name.value]
-			)
+				e.args[fieldNodes[0].arguments[0].value.name.value]
 		}
 
 		// if (a.includes('admin') && headers.admin) {
