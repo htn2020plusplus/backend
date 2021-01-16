@@ -1,6 +1,15 @@
-import { Arg, Field, InputType, Mutation, Query, Resolver } from 'type-graphql'
+import {
+	Arg,
+	Field,
+	InputType,
+	Mutation,
+	Query,
+	Resolver,
+	ID,
+} from 'type-graphql'
 import Category from '../models/Category'
 
+const allRelations = ['entities', 'policies', 'subscribedUsers']
 @InputType()
 class CreateCategoryInput {
 	@Field()
@@ -15,7 +24,14 @@ export default class CategoryResolver {
 	@Query(() => [Category])
 	categories() {
 		return Category.find({
-			relations: ['entities', 'policies', 'subscribedUsers'],
+			relations: allRelations,
+		})
+	}
+
+	@Query(() => Category)
+	category(@Arg('id', () => ID) id: string) {
+		return Category.findOneOrFail(id, {
+			relations: allRelations,
 		})
 	}
 
