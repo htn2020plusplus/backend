@@ -48,6 +48,16 @@ export default class NamedEntityResolver {
 
 	@Mutation(() => NamedEntity)
 	async createNamedEntity(@Arg('data') data: CreateNamedEntityInput) {
+		const n = await NamedEntity.findOne({
+			where: {
+				name: data.name,
+			},
+		})
+
+		if (n !== undefined) {
+			return n
+		}
+
 		const categories = await Promise.all(
 			data.categories.map((x) =>
 				Category.findOneOrFail(x, {
