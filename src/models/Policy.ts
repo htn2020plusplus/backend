@@ -11,6 +11,8 @@ import {
 import Category from './Category'
 import Index from './Index'
 import LegislationEvent from './Event'
+import UserResolver from '../resolvers/UserResolver'
+import User from './User'
 
 @ObjectType()
 @Entity()
@@ -48,4 +50,13 @@ export default class Policy extends BaseEntity {
 		inverseJoinColumns: [{ name: 'category_id' }],
 	})
 	categories?: Category[]
+
+	@ManyToMany(() => User, (u) => u.subscribedPolicies, { nullable: true })
+	@Field(() => [User], { nullable: true })
+	@JoinTable({
+		name: 'policy_subbed_users',
+		joinColumns: [{ name: 'policy_id' }],
+		inverseJoinColumns: [{ name: 'user_id' }],
+	})
+	subscribedUsers?: User[]
 }

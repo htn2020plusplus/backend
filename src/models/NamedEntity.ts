@@ -11,6 +11,7 @@ import {
 } from 'typeorm'
 import Category from './Category'
 import Index from './Index'
+import User from './User'
 
 @Entity()
 @ObjectType()
@@ -34,4 +35,13 @@ export default class NamedEntity extends BaseEntity {
 	@ManyToMany(() => Category, (c) => c.entities, { nullable: true })
 	@Field(() => [Category], { nullable: true })
 	categories?: Category[]
+
+	@ManyToMany(() => User, (u) => u.subscribedEntities, { nullable: true })
+	@Field(() => [User], { nullable: true })
+	@JoinTable({
+		name: 'entity_subbed_users',
+		joinColumns: [{ name: 'entity_id' }],
+		inverseJoinColumns: [{ name: 'user_id' }],
+	})
+	subscribedUsers?: User[]
 }

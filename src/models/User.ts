@@ -24,4 +24,12 @@ export default class User extends BaseEntity {
 	@ManyToMany(() => Category, (c) => c.subscribedUsers, { nullable: true })
 	@Field(() => [Category], { nullable: true })
 	subscribedCategories?: Category[]
+
+	@ManyToMany(() => NamedEntity, (c) => c.subscribedUsers, { nullable: true })
+	@Field(() => [NamedEntity], { nullable: true })
+	subscribedEntities?: NamedEntity[]
+
+	@ManyToMany(() => Policy, (c) => c.subscribedUsers, { nullable: true })
+	@Field(() => [Policy], { nullable: true })
+	subscribedPolicies?: Policy[]
 }

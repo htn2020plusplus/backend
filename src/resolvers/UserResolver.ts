@@ -10,8 +10,14 @@ import {
 } from 'type-graphql'
 import User from '../models/User'
 import Category from '../models/Category'
+import NamedEntity from '../models/NamedEntity'
+import Policy from '../models/Policy'
 
-const allRelations = ['subscribedCategories']
+const allRelations = [
+	'subscribedCategories',
+	'subscribedEntities',
+	'subscribedPolicies',
+]
 
 @InputType()
 class CreateUserInput {
@@ -53,10 +59,72 @@ export default class UserResolver {
 	}
 
 	@Query(() => User)
-	@Authorized(['admin', 'authed'])
 	user(@Arg('id') id: string) {
 		return User.findOneOrFail(id, {
 			relations: allRelations,
 		})
+	}
+
+	@Mutation(() => User)
+	@Authorized(['admin', 'authed'])
+	async followEntity(@Arg('id') id: string, @Arg('entity') entityID: string) {
+		const entity = await NamedEntity.findOneOrFail(entityID, {
+			relations: ['subscribedUsers'],
+		})
+
+		const user = await User.findOneOrFail(id, {
+			relations: ['subscribedEntities'],
+		})
+
+		entity.subscribedUsers?.push(user)
+		user.subscribedEntities?.push(entity)
+
+		await entity.save()
+		await user.save()
+
+		return user
+	}
+
+	@Mutation(() => User)
+	@Authorized(['admin', 'authed'])
+	async followCategory(
+		@Arg('id') id: string,
+		@Arg('category') entityID: string
+	) {
+		const entity = await Category.findOneOrFail(entityID, {
+			relations: ['subscribedUsers'],
+		})
+
+		const user = await User.findOneOrFail(id, {
+			relations: ['subscribedEntities'],
+		})
+
+		entity.subscribedUsers?.push(user)
+		user.subscribedCategories?.push(entity)
+
+		await entity.save()
+		await user.save()
+
+		return user
+	}
+
+	@Mutation(() => User)
+	@Authorized(['admin', 'authed'])
+	async followPolicy(@Arg('id') id: string, @Arg('policy') entityID: string) {
+		const entity = await Policy.findOneOrFail(entityID, {
+			relations: ['subscribedUsers'],
+		})
+
+		const user = await User.findOneOrFail(id, {
+			relations: ['subscribedEntities'],
+		})
+
+		entity.subscribedUsers?.push(user)
+		user.subscribedPolicies?.push(entity)
+
+		await entity.save()
+		await user.save()
+
+		return user
 	}
 }
