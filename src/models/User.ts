@@ -21,7 +21,7 @@ export default class User extends BaseEntity {
 	@PrimaryColumn()
 	id: string
 
-	@ManyToMany(() => Category, (c) => c.subscribedUsers)
-	@Field(() => [Category])
-	subscribedCategories: Category[]
+	@ManyToMany(() => Category, (c) => c.subscribedUsers, { nullable: true })
+	@Field(() => [Category], { nullable: true })
+	subscribedCategories?: Category[]
 }
