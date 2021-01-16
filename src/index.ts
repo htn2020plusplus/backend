@@ -2,7 +2,7 @@ import 'reflect-metadata'
 import fs from 'fs'
 import path from 'path'
 
-import dotenv from "dotenv"
+import dotenv from 'dotenv'
 dotenv.config()
 
 import { createConnection } from 'typeorm'
@@ -29,7 +29,7 @@ async function main() {
 		host: `${process.env.DB_HOST}`,
 		ssl: {
 			rejectUnauthorized: false,
-			ca: fs.readFileSync(path.resolve(__dirname, 'certs/be_cert.crt'))
+			ca: fs.readFileSync(path.resolve(__dirname, 'certs/be_cert.crt')),
 		},
 		entities: [NamedEntity, Category, Policy, Index, LegislationEvent, User],
 	})
