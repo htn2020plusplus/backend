@@ -7,18 +7,32 @@ import NamedEntity from './models/NamedEntity'
 import Category from './models/Category'
 import Policy from './models/Policy'
 import Index from './models/Index'
-import LegislationEvent from './models/Events'
+import LegislationEvent from './models/Event'
 import User from './models/User'
+import CategoryResolver from './resolvers/CategoryResolver'
+import PolicyResolver from './resolvers/PolicyResolver'
+import EventResolver from './resolvers/EventResolver'
+import IndexResolver from './resolvers/IndexResolver'
+import NamedEntityResolver from './resolvers/NamedEntityResolver'
 
 async function main() {
 	await createConnection({
 		type: 'postgres',
+		synchronize: true,
 		url: 'postgres://postgres@localhost:4445/postgres',
 		entities: [NamedEntity, Category, Policy, Index, LegislationEvent, User],
 	})
 
 	const schema = await buildSchema({
-		resolvers: [], // TODO
+		resolvers: [
+			CategoryResolver,
+			PolicyResolver,
+			CategoryResolver,
+			EventResolver,
+			IndexResolver,
+			NamedEntityResolver,
+			PolicyResolver,
+		], // TODO
 		authChecker: authChecker, // TODO: UDPATE AUTH CHECKER
 		validate: false,
 	})
