@@ -8,6 +8,7 @@ import {
 	OneToMany,
 	ManyToOne,
 	ManyToMany,
+	JoinTable,
 } from 'typeorm'
 import NamedEntity from './NamedEntity'
 import Policy from './Policy'
@@ -28,15 +29,25 @@ export default class Category extends BaseEntity {
 	@Column()
 	description: string
 
-	@ManyToMany(() => NamedEntity, (n) => n.categories)
-	@Field(() => [NamedEntity])
-	entities: NamedEntity[]
+	@ManyToMany(() => NamedEntity, (n) => n.categories, { nullable: true })
+	@Field(() => [NamedEntity], { nullable: true })
+	@JoinTable({
+		name: 'category_entities',
+		joinColumns: [{ name: 'category_id' }],
+		inverseJoinColumns: [{ name: 'entity_id' }],
+	})
+	entities?: NamedEntity[]
 
-	@ManyToMany(() => Policy, (n) => n.categories)
-	@Field(() => [Policy])
-	policies: Policy[]
+	@ManyToMany(() => Policy, (n) => n.categories, { nullable: true })
+	@Field(() => [Policy], { nullable: true })
+	policies?: Policy[]
 
-	@ManyToMany(() => User, (u) => u.subscribedCategories)
-	@Field(() => [User])
-	subscribedUsers: User[]
+	@ManyToMany(() => User, (u) => u.subscribedCategories, { nullable: true })
+	@Field(() => [User], { nullable: true })
+	@JoinTable({
+		name: 'category_subbed_users',
+		joinColumns: [{ name: 'category_id' }],
+		inverseJoinColumns: [{ name: 'user_id' }],
+	})
+	subscribedUsers?: User[]
 }
