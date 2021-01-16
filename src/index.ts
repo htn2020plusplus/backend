@@ -45,6 +45,10 @@ async function main() {
 		entities: [NamedEntity, Category, Policy, Index, LegislationEvent, User],
 	})
 
+	console.log(
+		`postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}.${process.env.DB_DB}`
+	)
+
 	const schema = await buildSchema({
 		resolvers: [
 			CategoryResolver,
