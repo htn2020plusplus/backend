@@ -14,6 +14,17 @@ import PolicyResolver from './resolvers/PolicyResolver'
 import EventResolver from './resolvers/EventResolver'
 import IndexResolver from './resolvers/IndexResolver'
 import NamedEntityResolver from './resolvers/NamedEntityResolver'
+import UserResolver from './resolvers/UserResolver'
+import firebaseAdmin from 'firebase-admin'
+
+console.log(JSON.parse(process.env.adminSecret as string))
+console.log(process.env.adminSecret)
+
+firebaseAdmin.initializeApp({
+	credential: firebaseAdmin.credential.cert(
+		JSON.parse(process.env.adminSecret as string)
+	),
+})
 
 async function main() {
 	await createConnection({
@@ -32,6 +43,7 @@ async function main() {
 			IndexResolver,
 			NamedEntityResolver,
 			PolicyResolver,
+			UserResolver,
 		], // TODO
 		authChecker: authChecker, // TODO: UDPATE AUTH CHECKER
 		validate: false,
