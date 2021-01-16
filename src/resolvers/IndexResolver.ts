@@ -1,9 +1,23 @@
-import { Arg, Field, InputType, Mutation, Query, Resolver } from 'type-graphql'
+import {
+	Arg,
+	Field,
+	ID,
+	InputType,
+	Mutation,
+	Query,
+	Resolver,
+} from 'type-graphql'
 import Category from '../models/Category'
 import LegislationEvent from '../models/Event'
 import Index from '../models/Index'
 import NamedEntity from '../models/NamedEntity'
 
+const allRelations = [
+	'entity',
+	'legislationEvent',
+	'entity.indices',
+	'entity.categories',
+]
 @InputType()
 class CreateIndexInput {
 	@Field()
@@ -21,7 +35,14 @@ export default class IndexResolver {
 	@Query(() => [Index])
 	indices() {
 		return Index.find({
-			relations: ['entity', 'legislationEvent'] as (keyof Index)[],
+			relations: allRelations,
+		})
+	}
+
+	@Query(() => Index)
+	index(@Arg('id', () => ID) id: string) {
+		return Index.findOneOrFail(id, {
+			relations: allRelations,
 		})
 	}
 

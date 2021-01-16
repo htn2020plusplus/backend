@@ -1,8 +1,22 @@
-import { Arg, Field, InputType, Mutation, Query, Resolver } from 'type-graphql'
+import {
+	Arg,
+	Field,
+	InputType,
+	Mutation,
+	Query,
+	Resolver,
+	ID,
+} from 'type-graphql'
 import Category from '../models/Category'
 import NamedEntity from '../models/NamedEntity'
 
-const allRelations: (keyof NamedEntity)[] = ['categories', 'indices']
+const allRelations = [
+	'categories',
+	'categories.policies',
+	'categories.subscribedUsers',
+	'indices',
+	'indices.legislationEvent',
+]
 
 @InputType()
 class CreateNamedEntityInput {
@@ -19,8 +33,15 @@ class CreateNamedEntityInput {
 @Resolver()
 export default class NamedEntityResolver {
 	@Query(() => [NamedEntity])
-	categories() {
+	namedEntities() {
 		return NamedEntity.find({
+			relations: allRelations,
+		})
+	}
+
+	@Query(() => NamedEntity)
+	async namedEntity(@Arg('id', () => ID) id: string) {
+		return NamedEntity.findOneOrFail(id, {
 			relations: allRelations,
 		})
 	}

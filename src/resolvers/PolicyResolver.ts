@@ -1,4 +1,12 @@
-import { Arg, Field, InputType, Mutation, Query, Resolver } from 'type-graphql'
+import {
+	Arg,
+	Field,
+	ID,
+	InputType,
+	Mutation,
+	Query,
+	Resolver,
+} from 'type-graphql'
 import Category from '../models/Category'
 import LegislationEvent from '../models/Event'
 import Policy from '../models/Policy'
@@ -28,6 +36,13 @@ export default class PolicyResolver {
 	@Query(() => [Policy])
 	policies() {
 		return Policy.find({
+			relations: allRelations,
+		})
+	}
+
+	@Query(() => Policy)
+	policy(@Arg('id', () => ID) id: string) {
+		return Policy.findOneOrFail(id, {
 			relations: allRelations,
 		})
 	}

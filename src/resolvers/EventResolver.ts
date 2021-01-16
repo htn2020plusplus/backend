@@ -1,7 +1,16 @@
-import { Arg, Field, InputType, Mutation, Query, Resolver } from 'type-graphql'
+import {
+	Arg,
+	Field,
+	InputType,
+	Mutation,
+	Query,
+	Resolver,
+	ID,
+} from 'type-graphql'
 import Event from '../models/Event'
 import Index from '../models/Index'
 
+const allRelations = ['indices', 'policy']
 @InputType()
 class CreateEventInput {
 	@Field()
@@ -20,9 +29,16 @@ class CreateEventInput {
 @Resolver()
 export default class EventResolver {
 	@Query(() => [Event])
-	categories() {
+	events() {
 		return Event.find({
-			relations: ['entities', 'policies', 'subscribedUsers'],
+			relations: allRelations,
+		})
+	}
+
+	@Query(() => Event)
+	event(@Arg('id', () => ID) id: string) {
+		return Event.findOneOrFail(id, {
+			relations: allRelations,
 		})
 	}
 
