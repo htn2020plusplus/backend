@@ -22,9 +22,9 @@ export default class Policy extends BaseEntity {
 	@Column()
 	text: string
 
-	@Field({ nullable: true })
-	@Column({ nullable: true })
-	description?: string
+	@Field()
+	@Column()
+	description: string
 
 	@Field(() => [LegislationEvent])
 	@OneToMany(() => LegislationEvent, (le) => le.policy)

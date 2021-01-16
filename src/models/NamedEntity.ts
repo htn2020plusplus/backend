@@ -18,13 +18,9 @@ export default class NamedEntity extends BaseEntity {
 	@PrimaryGeneratedColumn('uuid')
 	id: string
 
-	@Field({
-		nullable: true,
-	})
-	@Column({
-		nullable: true,
-	})
-	description?: string // Nullable because descriptions will only come after we add in all the entities
+	@Field()
+	@Column()
+	description: string // Nullable because descriptions will only come after we add in all the entities
 
 	@Field()
 	@Column()

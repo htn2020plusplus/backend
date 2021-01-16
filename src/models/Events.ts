@@ -16,9 +16,9 @@ export default class LegislationEvent extends BaseEntity {
     @Column()
     text: string // Full text at that point in time
 
-    @Field({nullable: true})
-    @Column({nullable: true})
-    description?: string // Description of all changes between last legislation update and now; ML-generated stuffs
+    @Field()
+    @Column()
+    description: string // Description of all changes between last legislation update and now; ML-generated stuffs
 
 
     @Field(() => [Index])
