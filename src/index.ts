@@ -1,4 +1,10 @@
 import 'reflect-metadata'
+import fs from 'fs'
+import path from 'path'
+
+import dotenv from "dotenv"
+dotenv.config()
+
 import { createConnection } from 'typeorm'
 import { ApolloServer } from 'apollo-server'
 import { buildSchema } from 'type-graphql'
@@ -17,9 +23,14 @@ import NamedEntityResolver from './resolvers/NamedEntityResolver'
 
 async function main() {
 	await createConnection({
-		type: 'postgres',
+		type: 'cockroachdb',
 		synchronize: true,
-		url: 'postgres://postgres@localhost:4445/postgres',
+		url: `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}.${process.env.DB_DB}`,
+		host: `${process.env.DB_HOST}`,
+		ssl: {
+			rejectUnauthorized: false,
+			ca: fs.readFileSync(path.resolve(__dirname, 'certs/be_cert.crt'))
+		},
 		entities: [NamedEntity, Category, Policy, Index, LegislationEvent, User],
 	})
 

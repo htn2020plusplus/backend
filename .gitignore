@@ -116,3 +116,6 @@ dist
 .pnp.*
 .DS_STORE
 .dist
+
+# certs
+src/certs/*.crt
