@@ -24,6 +24,10 @@ export default class NamedEntity extends BaseEntity {
 	@Column()
 	description: string
 
+	@Field(() => String, { defaultValue: 'organization' })
+	@Column({ default: 'organization' })
+	type: string
+
 	@Field()
 	@Column()
 	name: string
