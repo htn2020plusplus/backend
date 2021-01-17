@@ -13,3 +13,6 @@ yarn.lock
 LICENSE
 *.png
 yarn-error.log
+.DS_Store
+Dockerfile
+.Dockerignore
