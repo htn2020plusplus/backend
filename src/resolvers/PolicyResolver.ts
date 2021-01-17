@@ -47,7 +47,7 @@ export default class PolicyResolver {
 		})
 	}
 
-	@Mutation(() => Category)
+	@Mutation(() => Policy)
 	async createPolicy(@Arg('data') data: CreatePolicyInput) {
 		const categories = await Promise.all(
 			data.categories.map((v) =>

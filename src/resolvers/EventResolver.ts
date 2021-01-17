@@ -9,8 +9,9 @@ import {
 } from 'type-graphql'
 import Event from '../models/Event'
 import Index from '../models/Index'
+import Category from '../models/Category'
 
-const allRelations = ['indices', 'policy']
+const allRelations = ['indices', 'policy', 'categories']
 @InputType()
 class CreateEventInput {
 	@Field()
@@ -24,6 +25,9 @@ class CreateEventInput {
 
 	@Field(() => [String])
 	indices: string[]
+
+	@Field(() => [String])
+	categories: string[]
 }
 
 @Resolver()
@@ -44,6 +48,14 @@ export default class EventResolver {
 
 	@Mutation(() => Event)
 	async createEvent(@Arg('data') data: CreateEventInput) {
+		const categories = await Promise.all(
+			data.categories.map((v) =>
+				Category.findOneOrFail(v, {
+					relations: ['policies'],
+				})
+			)
+		)
+
 		const indices = await Promise.all(
 			data.indices.map((z) =>
 				Index.findOneOrFail(z, {
@@ -56,6 +68,7 @@ export default class EventResolver {
 
 		event.description = data.description
 		event.text = data.text
+		event.categories = categories
 		event.timestamp = new Date(data.timestamp)
 		event.indices = indices
 
