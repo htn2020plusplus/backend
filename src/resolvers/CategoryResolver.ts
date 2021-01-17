@@ -29,7 +29,7 @@ export default class CategoryResolver {
 	}
 
 	@Query(() => Category)
-	category(@Arg('id', () => ID) id: string) {
+	category(@Arg('id') id: string) {
 		return Category.findOneOrFail(id, {
 			relations: allRelations,
 		})

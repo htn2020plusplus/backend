@@ -49,6 +49,15 @@ export default class NamedEntityResolver {
 		})
 	}
 
+	@Query(() => NamedEntity)
+	async searchEntity(@Arg('entity') entity: string) {
+		return NamedEntity.findOneOrFail({
+			where: {
+				name: entity,
+			},
+		})
+	}
+
 	@Mutation(() => NamedEntity)
 	async createNamedEntity(@Arg('data') data: CreateNamedEntityInput) {
 		const n = await NamedEntity.findOne({
