@@ -44,12 +44,12 @@ async function main() {
 
 	await createConnection({
 		type: 'postgres',
-		host: 'ec2-3-220-98-137.compute-1.amazonaws.com',
-		database: 'dev989papr3p0t',
-		username: 'ijbzzutzyofbdt',
+		host: 'ec2-3-215-76-208.compute-1.amazonaws.com',
+		database: 'd8t5a3cnmc7pb7',
+		username: 'elimuoxmsxdizx',
 		port: 5432,
 		password:
-			'82e8f3126462cec6f5f939aeb5145dfa911a500776b742a0bdbc0f1571cdc0df',
+			'70fbc2e7aaeb68b4a5e6833ce3b1878f51e54b89a841540ec83a57e6eba4e18f',
 		entities: [NamedEntity, Category, Policy, Index, LegislationEvent, User],
 		synchronize: true,
 		ssl: {

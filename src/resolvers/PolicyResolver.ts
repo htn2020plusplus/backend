@@ -52,7 +52,12 @@ export default class PolicyResolver {
 		const categories = await Promise.all(
 			data.categories.map((v) =>
 				Category.findOneOrFail(v, {
-					relations: ['policies'],
+					join: {
+						alias: 'category',
+						leftJoinAndSelect: {
+							policies: 'category.policies',
+						},
+					},
 				})
 			)
 		)
