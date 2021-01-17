@@ -1,0 +1,19 @@
+runtime: nodejs12 # or another supported version
+
+instance_class: F2
+
+env_variables:
+  adminSecret: {"type":"service_account","project_id":"htn2020-651e5","private_key_id":"b6de312638ed6a88f69e33e28efdf777e985bfcd","private_key":"-----BEGIN PRIVATE KEY-----MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDCKY0r7XX2DLoEXxcZFpReeM/QJulvRHYbmMOtUh4fejhSQ/Tsfop5+S8PSDuV3MaIpGJLprv3PZFbSN20xSTIcdx6Z6g9WxPetPct/YQ5gp3CiEGedpaSQBFCkEdJbwlNGQqYJYy0w5hF/IINnseJejSXy640bq+9lV1qEkMy8g7MryksEHd51taanEMK1jZ4PUr/KHzodFnpKo0ALvBASwk22BkyrW9eDpFmtA79trOvw4FaOzyBOV1Oq9Dav8s8FNUJ8+wVsm3djZlrTQp/XLTdTLvruY+WbgF7Y5d6zytSkoUTcTrdjzrqfLyiXmJyHbQifjUTBuXJa8aw9s0HAgMBAAECggEAU+jGIDZKtM9yMoJvxoFaFGvMj43JczMYgbum0Qf8iaj1nyPMPMpBCQ511npmedEEIbg83KnNcL90Sol2evF6AIAoguO6Mu3h6+y0J/V4R6xZhmEBTry8PK8gZm5YyHUKhX2tdOxBXztqWtCR2dYFMLYV9YXqHrG5FErxKG6FCQYPSBrDM1wzxgq2nV1C1lGsVzrBCXUM90/CUqDnjjwPwYqoI4Bt1S+xupcTWiQ1QfVPwWMC3GIJ2Eg+O1KrvyZjtmssvEawpVn2LwddWqj3S1HYa43etndkeIm/3hJQ2iEjtGitcFb+MoBjY0OP0DCcrf/8fsw1J7SYSJGfWmt2nQKBgQDgJXU2uv4G8BXn6ghAbEJZAKsuQN7GcthXZXO2cwbp5FiIpStpmNefVtR/IRsBybc5AbKo2TGwv5c0ph8S2lo6VlWdDA6uM+el1V5LrCDYF7unA9NDN73YBVl4Ke8BM9a1tZh8vqYnRtf5RY7MkIym+zFIR2xSWLDCFVSKMUatbQKBgQDdwUMXbDElxZltVwvDR5j9FwuKfEJTAd2+L+VU7hByhTuIoCrmaAW8oOV6bY2YiwEdAUv2H/+IkBPjhmExX6/AttPrq0S217sjtkw7uACEff1ehElCyvxmabW/dRfzFm2STT83bW76+MR2iaMsTTMz7EbRYYT5+xjMT5OBm9KfwwKBgDAimytnuMnQoUOulJsRJKZsaFaEg9LmMuOB2/mgdimgagrePZZtxlBnmza560zU/s31OWLdUbh9TIF381BfJ+VDSRtyzWxHpUWNrrRdgKgnYJsbTTEwNUrAy1fs2XDOqxtWpiqT3qasphDYCTSRDkOFyi2VeQOuHDdx0TfkISN5AoGBANf9OnTg64nnygXmp81fulKhFJuhZhRll+57xjqP2jNBM/hiUQa0QQo2CO3TMPxoQABZV/x1tDX2Z3jQVXB6y7vAF+/OlJIm09732467LL3f3V4nKRhGj8rMobrGuToLGVRLqww4qcUHcowmiWlIFFw5gczE2HmHqeKui3TNKjxzAoGBAKbXd6oe8LU3Zn9ilfmVqkLq4SmlyApzRICpwNapPnNirYF5xB4UXBybmKGMEpRRas7OSU1o+PItw5xI5jdyux6/N10emCgT4arLU2WK3pHibG7Dk8qkRAChru5K4lMx3BsCM4RcKJ9rgPovyhHq00wR7bXFO9qi9zZSNOIH18OC-----END PRIVATE KEY-----","client_email":"firebase-adminsdk-nuxno@htn2020-651e5.iam.gserviceaccount.com","client_id":"117516565653310388779","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_x509_cert_url":"https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-nuxno%40htn2020-651e5.iam.gserviceaccount.com"}
+  admin: "awef"
+  DB_USER: backend_app
+  DB_PASS: '#spicy_beanstalk'
+  DB_HOST: free-tier.gcp-us-central1.cockroachlabs.cloud
+  DB_PORT: 26257
+  DB_NAME: itchy-pig-153
+  DB_DB: defaultdb
+
+handlers:
+- url: /.*
+  secure: always
+  redirect_http_response_code: 301
+  script: auto

@@ -25,7 +25,7 @@ class CreatePolicyInput {
 	text: string
 
 	@Field()
-	legislationEvent: string
+	legislationEvents: string[]
 
 	@Field(() => [String])
 	categories: string[]
@@ -57,16 +57,17 @@ export default class PolicyResolver {
 			)
 		)
 
-		const legislationEvent = await LegislationEvent.findOneOrFail(
-			data.legislationEvent,
-			{
-				relations: ['policy'],
-			}
+		const legislationEvents = await Promise.all(
+			data.legislationEvents.map((v) =>
+				LegislationEvent.findOneOrFail(v, {
+					relations: ['policies'],
+				})
+			)
 		)
 
 		const policy = new Policy()
 
-		policy.legislationEvents = [legislationEvent]
+		policy.legislationEvents = legislationEvents
 		policy.categories = categories
 
 		policy.text = data.text
@@ -82,8 +83,12 @@ export default class PolicyResolver {
 			})
 		)
 
-		legislationEvent.policy = policy
-		await legislationEvent.save()
+		await Promise.all(
+			legislationEvents.map(async (legislationEvent) => {
+				legislationEvent.policy = policy
+				await legislationEvent.save()
+			})
+		)
 
 		return policy
 	}

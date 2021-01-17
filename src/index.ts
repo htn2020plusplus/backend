@@ -23,9 +23,6 @@ import NamedEntityResolver from './resolvers/NamedEntityResolver'
 import UserResolver from './resolvers/UserResolver'
 import firebaseAdmin from 'firebase-admin'
 
-console.log(JSON.parse(process.env.adminSecret as string))
-console.log(process.env.adminSecret)
-
 firebaseAdmin.initializeApp({
 	credential: firebaseAdmin.credential.cert(
 		JSON.parse(process.env.adminSecret as string)

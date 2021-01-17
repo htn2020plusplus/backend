@@ -46,6 +46,15 @@ export default class IndexResolver {
 		})
 	}
 
+	@Query(() => Index)
+	async searchIndex(@Arg('entity') entity: string) {
+		return Index.findOneOrFail({
+			where: {
+				entity: entity,
+			},
+		})
+	}
+
 	@Mutation(() => Index)
 	async createIndex(@Arg('data') data: CreateIndexInput) {
 		const entity = await NamedEntity.findOneOrFail(data.entity, {
