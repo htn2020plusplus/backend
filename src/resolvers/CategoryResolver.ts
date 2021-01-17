@@ -44,6 +44,7 @@ export default class CategoryResolver {
 		category.policies = []
 		category.subscribedUsers = []
 		category.entities = []
+		category.legislativeEvents = []
 
 		await category.save()
 

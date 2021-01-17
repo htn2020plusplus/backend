@@ -24,6 +24,7 @@ import NamedEntity from './NamedEntity'
 import Policy from './Policy'
 import User from './User'
 import { PaginationInput } from './Pagination'
+import LegislationEvent from './Event'
 
 @ObjectType()
 @Entity()
@@ -56,6 +57,15 @@ export default class Category extends BaseEntity {
 	@CreateDateColumn()
 	@Field(() => Date)
 	createdAt: Date
+
+	@ManyToMany(() => LegislationEvent, (l) => l.categories, { nullable: true })
+	@Field(() => [LegislationEvent], { nullable: true })
+	@JoinTable({
+		name: 'category_legislative_events',
+		joinColumns: [{ name: 'category_id' }],
+		inverseJoinColumns: [{ name: 'legislative_id' }],
+	})
+	legislativeEvents?: LegislationEvent[]
 
 	@ManyToMany(() => Policy, (n) => n.categories, { nullable: true })
 	@Field(() => [Policy], { nullable: true })

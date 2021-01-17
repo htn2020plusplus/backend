@@ -51,7 +51,7 @@ export default class EventResolver {
 		const categories = await Promise.all(
 			data.categories.map((v) =>
 				Category.findOneOrFail(v, {
-					relations: ['policies'],
+					relations: ['legislativeEvents'],
 				})
 			)
 		)
@@ -70,6 +70,7 @@ export default class EventResolver {
 		event.text = data.text
 		event.categories = categories
 		event.timestamp = new Date(data.timestamp)
+		event.categories = categories
 		event.indices = indices
 
 		await event.save()
@@ -78,6 +79,13 @@ export default class EventResolver {
 			indices.map(async (z) => {
 				z.legislationEvent = event
 				await z.save()
+			})
+		)
+
+		await Promise.all(
+			categories.map(async (c) => {
+				c.legislativeEvents = event
+				await c.save()
 			})
 		)
 

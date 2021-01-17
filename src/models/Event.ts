@@ -8,10 +8,12 @@ import {
 	ManyToOne,
 	UpdateDateColumn,
 	CreateDateColumn,
+	ManyToMany,
 } from 'typeorm'
 import NamedEntity from './NamedEntity'
 import Index from './Index'
 import Policy from './Policy'
+import Category from './Category'
 
 @ObjectType()
 @Entity()
@@ -49,4 +51,8 @@ export default class LegislationEvent extends BaseEntity {
 		nullable: true,
 	})
 	policy?: Policy
+
+	@ManyToMany(() => Category, (l) => l.legislativeEvents, { nullable: true })
+	@Field(() => [Category], { nullable: true })
+	categories?: Category[]
 }
