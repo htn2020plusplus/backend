@@ -24,7 +24,7 @@ class CreatePolicyInput {
 	@Field()
 	text: string
 
-	@Field()
+	@Field(() => [String])
 	legislationEvents: string[]
 
 	@Field(() => [String])
