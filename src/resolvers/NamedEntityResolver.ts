@@ -28,6 +28,9 @@ class CreateNamedEntityInput {
 
 	@Field(() => [String])
 	categories: string[]
+
+	@Field()
+	type: string
 }
 
 @Resolver()
@@ -72,6 +75,7 @@ export default class NamedEntityResolver {
 		entity.description = data.description
 		entity.indices = []
 		entity.name = data.name
+		entity.type = data.type
 
 		await entity.save()
 
