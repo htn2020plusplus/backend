@@ -84,7 +84,7 @@ export default class EventResolver {
 
 		await Promise.all(
 			categories.map(async (c) => {
-				c.legislativeEvents = event
+				c.legislativeEvents?.push(event)
 				await c.save()
 			})
 		)
