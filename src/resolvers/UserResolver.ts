@@ -26,12 +26,15 @@ class CreateUserInput {
 
 	@Field(() => [String])
 	categories: string[]
+
+	@Field(() => [String])
+	entities: string[]
 }
 
 @Resolver()
 export default class UserResolver {
 	@Mutation(() => User)
-	@Authorized(['admin', 'authed'])
+	// @Authorized(['admin'])
 	async createUser(@Arg('data') data: CreateUserInput) {
 		const categories = await Promise.all(
 			data.categories.map((v) =>
@@ -41,15 +44,31 @@ export default class UserResolver {
 			)
 		)
 
+		const entities = await Promise.all(
+			data.entities.map((v) =>
+				NamedEntity.findOneOrFail(v, {
+					relations: ['subscribedUsers'],
+				})
+			)
+		)
+
 		const user = new User()
 		user.id = data.uid
 
 		user.subscribedCategories = categories
+		user.subscribedEntities = entities
 
 		await user.save()
 
 		await Promise.all(
 			categories.map(async (c) => {
+				c.subscribedUsers?.push(user)
+				c.save()
+			})
+		)
+
+		await Promise.all(
+			entities.map(async (c) => {
 				c.subscribedUsers?.push(user)
 				c.save()
 			})

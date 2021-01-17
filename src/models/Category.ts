@@ -1,5 +1,13 @@
 import { FILE } from 'dns'
-import { ObjectType, Field, ID } from 'type-graphql'
+import {
+	ObjectType,
+	Field,
+	ID,
+	FieldResolver,
+	Resolver,
+	Root,
+	Arg,
+} from 'type-graphql'
 import {
 	Entity,
 	BaseEntity,
@@ -9,10 +17,13 @@ import {
 	ManyToOne,
 	ManyToMany,
 	JoinTable,
+	UpdateDateColumn,
+	CreateDateColumn,
 } from 'typeorm'
 import NamedEntity from './NamedEntity'
 import Policy from './Policy'
 import User from './User'
+import { PaginationInput } from './Pagination'
 
 @ObjectType()
 @Entity()
@@ -37,6 +48,14 @@ export default class Category extends BaseEntity {
 		inverseJoinColumns: [{ name: 'entity_id' }],
 	})
 	entities?: NamedEntity[]
+
+	@UpdateDateColumn()
+	@Field(() => Date)
+	updatedAt: Date
+
+	@CreateDateColumn()
+	@Field(() => Date)
+	createdAt: Date
 
 	@ManyToMany(() => Policy, (n) => n.categories, { nullable: true })
 	@Field(() => [Policy], { nullable: true })

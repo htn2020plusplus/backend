@@ -6,6 +6,8 @@ import {
 	Column,
 	OneToMany,
 	ManyToOne,
+	UpdateDateColumn,
+	CreateDateColumn,
 } from 'typeorm'
 import NamedEntity from './NamedEntity'
 import Index from './Index'
@@ -21,6 +23,14 @@ export default class LegislationEvent extends BaseEntity {
 	@Field()
 	@Column()
 	text: string // Full text at that point in time
+
+	@UpdateDateColumn()
+	@Field(() => Date)
+	updatedAt: Date
+
+	@CreateDateColumn()
+	@Field(() => Date)
+	createdAt: Date
 
 	@Field()
 	@Column()

@@ -4,6 +4,8 @@ import {
 	PrimaryGeneratedColumn,
 	Column,
 	ManyToOne,
+	UpdateDateColumn,
+	CreateDateColumn,
 } from 'typeorm'
 import { ObjectType, Field, ID } from 'type-graphql'
 import NamedEntity from './NamedEntity'
@@ -31,4 +33,12 @@ export default class Index extends BaseEntity {
 	@ManyToOne(() => LegislationEvent, (le) => le.indices, { nullable: true })
 	@Field(() => LegislationEvent, { nullable: true })
 	legislationEvent?: LegislationEvent
+
+	@UpdateDateColumn()
+	@Field(() => Date)
+	updatedAt: Date
+
+	@CreateDateColumn()
+	@Field(() => Date)
+	createdAt: Date
 }

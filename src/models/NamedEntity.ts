@@ -8,6 +8,8 @@ import {
 	ManyToOne,
 	OneToMany,
 	PrimaryGeneratedColumn,
+	UpdateDateColumn,
+	CreateDateColumn,
 } from 'typeorm'
 import Category from './Category'
 import Index from './Index'
@@ -23,6 +25,14 @@ export default class NamedEntity extends BaseEntity {
 	@Field()
 	@Column()
 	description: string
+
+	@UpdateDateColumn()
+	@Field(() => Date)
+	updatedAt: Date
+
+	@CreateDateColumn()
+	@Field(() => Date)
+	createdAt: Date
 
 	@Field(() => String, { defaultValue: 'organization' })
 	@Column({ default: 'organization' })
