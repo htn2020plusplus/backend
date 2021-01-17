@@ -65,11 +65,9 @@ async function main() {
 		resolvers: [
 			CategoryResolver,
 			PolicyResolver,
-			CategoryResolver,
 			EventResolver,
 			IndexResolver,
 			NamedEntityResolver,
-			PolicyResolver,
 			UserResolver,
 		], // TODO
 		authChecker: authChecker, // TODO: UDPATE AUTH CHECKER
